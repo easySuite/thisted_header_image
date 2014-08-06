@@ -1,0 +1,11 @@
+name = Thisted header image
+description = Display specific header image.
+core = 7.x
+package = Features
+dependencies[] = features
+dependencies[] = file
+features[features_api][] = api:1
+features[field_base][] = field_header_image
+features[field_instance][] = node-ding_library-field_header_image
+features_exclude[dependencies][file_entity] = file_entity
+features_exclude[dependencies][media] = media

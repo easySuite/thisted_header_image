@@ -1,0 +1,56 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_page_alter().
+ */
+function thisted_header_image_page_alter(&$page) {
+  $item = menu_get_object();
+  if (isset($item->type)) {
+    if ($item->type == 'ding_library') {
+      $lang = field_language('node', $item, 'field_header_image');
+      if (isset($item->field_header_image[$lang][0]) && !empty($item->field_header_image[$lang][0])) {
+        $image = $item->field_header_image[$lang][0];
+        // Set specific background.
+        if (($url = file_create_url($image['uri'])) !== FALSE) {
+          $css = ".topbar-inner {
+            background-image: url({$url}) !important;
+          }";
+          drupal_add_css($css, array('type' => 'inline'));
+        }
+      }
+    }
+    elseif (in_array($item->type, array('ding_news', 'ding_events'))) {
+      $lang = field_language('node', $item, 'og_group_ref');
+      if (isset($item->og_group_ref) && !empty($item->og_group_ref)) {
+        $nid = $item->og_group_ref[$lang][0]['target_id'];
+        $lib = node_load($nid);
+        //Get necessary field.
+        $image = field_get_items('node', $lib, 'field_header_image');
+        // Set specific background.
+        if (($url = file_create_url($image[0]['uri'])) !== FALSE) {
+          $css = ".topbar-inner {
+            background-image: url({$url}) !important;
+          }";
+          drupal_add_css($css, array('type' => 'inline'));
+        }
+      }
+    }
+    elseif ($item->type == 'ding_page') {
+      $lang = field_language('node', $item, 'ding_page_group_ref');
+      $nid = $item->ding_page_group_ref[$lang][0]['target_id'];
+      $lib = node_load($nid);
+      //Get necessary field.
+      $image = field_get_items('node', $lib, 'field_header_image');
+      // Set specific background.
+      if (($url = file_create_url($image[0]['uri'])) !== FALSE) {
+        $css = ".topbar-inner {
+          background-image: url({$url}) !important;
+        }";
+        drupal_add_css($css, array('type' => 'inline'));
+      }
+    }
+  }
+}
