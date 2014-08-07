@@ -27,7 +27,7 @@ function thisted_header_image_page_alter(&$page) {
       if (isset($item->og_group_ref) && !empty($item->og_group_ref)) {
         $nid = $item->og_group_ref[$lang][0]['target_id'];
         $lib = node_load($nid);
-        //Get necessary field.
+        // Get necessary field.
         $image = field_get_items('node', $lib, 'field_header_image');
         // Set specific background.
         if (($url = file_create_url($image[0]['uri'])) !== FALSE) {
@@ -42,7 +42,7 @@ function thisted_header_image_page_alter(&$page) {
       $lang = field_language('node', $item, 'ding_page_group_ref');
       $nid = $item->ding_page_group_ref[$lang][0]['target_id'];
       $lib = node_load($nid);
-      //Get necessary field.
+      // Get necessary field.
       $image = field_get_items('node', $lib, 'field_header_image');
       // Set specific background.
       if (($url = file_create_url($image[0]['uri'])) !== FALSE) {
