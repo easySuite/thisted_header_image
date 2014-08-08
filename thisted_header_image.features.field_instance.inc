@@ -47,7 +47,7 @@ function thisted_header_image_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_header_image',
     'label' => 'Header image',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'description_field' => 0,
       'file_directory' => 'header_image',

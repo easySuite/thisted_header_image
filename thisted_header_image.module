@@ -24,9 +24,9 @@ function thisted_header_image_page_alter(&$page) {
         }
       }
     }
-    elseif (in_array($item->type, array('ding_news', 'ding_events'))) {
+    elseif (in_array($item->type, array('ding_news', 'ding_event'))) {
       $lang = field_language('node', $item, 'og_group_ref');
-      if (!empty($item->og_group_ref)) {
+      if (isset($item->og_group_ref[$lang][0]['target_id']) && !empty($item->og_group_ref[$lang][0]['target_id'])) {
         $nid = $item->og_group_ref[$lang][0]['target_id'];
         $lib = node_load($nid);
         // Get necessary field.
@@ -43,17 +43,19 @@ function thisted_header_image_page_alter(&$page) {
     }
     elseif ($item->type == 'ding_page') {
       $lang = field_language('node', $item, 'ding_page_group_ref');
-      $nid = $item->ding_page_group_ref[$lang][0]['target_id'];
-      $lib = node_load($nid);
-      // Get necessary field.
-      $image = field_get_items('node', $lib, 'field_header_image');
-      // Set specific background.
-      $url = file_create_url($image[0]['uri']);
-      if ($url != FALSE) {
-        $css = ".topbar-inner {
-          background-image: url({$url}) !important;
-        }";
-        drupal_add_css($css, array('type' => 'inline'));
+      if (isset($item->ding_page_group_ref[$lang][0]) && !empty($item->ding_page_group_ref[$lang][0])) {
+        $nid = $item->ding_page_group_ref[$lang][0]['target_id'];
+        $lib = node_load($nid);
+        // Get necessary field.
+        $image = field_get_items('node', $lib, 'field_header_image');
+        // Set specific background.
+        $url = file_create_url($image[0]['uri']);
+        if ($url != FALSE) {
+          $css = ".topbar-inner {
+            background-image: url({$url}) !important;
+          }";
+          drupal_add_css($css, array('type' => 'inline'));
+        }
       }
     }
   }
