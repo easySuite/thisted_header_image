@@ -31,13 +31,15 @@ function thisted_header_image_page_alter(&$page) {
         $lib = node_load($nid);
         // Get necessary field.
         $image = field_get_items('node', $lib, 'field_header_image');
-        // Set specific background.
-        $url = file_create_url($image[0]['uri']);
-        if ($url != FALSE) {
-          $css = ".topbar-inner {
-            background-image: url({$url}) !important;
-          }";
-          drupal_add_css($css, array('type' => 'inline'));
+        if (isset($image[0]) && !empty($image[0])) {
+          // Set specific background.
+          $url = file_create_url($image[0]['uri']);
+          if ($url != FALSE) {
+            $css = ".topbar-inner {
+              background-image: url({$url}) !important;
+            }";
+            drupal_add_css($css, array('type' => 'inline'));
+          }
         }
       }
     }
@@ -48,13 +50,15 @@ function thisted_header_image_page_alter(&$page) {
         $lib = node_load($nid);
         // Get necessary field.
         $image = field_get_items('node', $lib, 'field_header_image');
-        // Set specific background.
-        $url = file_create_url($image[0]['uri']);
-        if ($url != FALSE) {
-          $css = ".topbar-inner {
-            background-image: url({$url}) !important;
-          }";
-          drupal_add_css($css, array('type' => 'inline'));
+        if (isset($image[0]) && !empty($image[0])) {
+          // Set specific background.
+          $url = file_create_url($image[0]['uri']);
+          if ($url != FALSE) {
+            $css = ".topbar-inner {
+              background-image: url({$url}) !important;
+            }";
+            drupal_add_css($css, array('type' => 'inline'));
+          }
         }
       }
     }
